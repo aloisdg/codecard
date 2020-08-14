@@ -1,0 +1,365 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCard</title>
+
+    <style>
+        *,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+
+        header {
+            padding: 1rem;
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            font-size: 2rem;
+        }
+
+        main {
+            max-width: 500px;
+            max-height: 500px;
+            width: 100vw;
+            height: 100vw;
+            background: sandybrown;
+            padding: 1%;
+            grid-row: 2;
+            place-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 1%;
+            border-width: 0.7rem;
+            border-style: solid;
+            transition: all 0.3s ease-in-out;
+        }
+
+        main>div {
+            position: relative;
+            width: 18%;
+            height: 18%;
+            margin: 1%;
+            border-radius: 5%;
+            transition: all 0.3s ease-in;
+        }
+
+        .u {
+            background-color: royalblue;
+        }
+
+        .b {
+            background-color: #1a1a1a;
+        }
+
+        .b::after {
+            content: 'X';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: whitesmoke;
+            display: grid;
+            place-items: center;
+            font-size: 150%;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .rotate0 .b::after {
+            transform: rotate(0deg);
+        }
+
+        .rotate90 .b::after {
+            transform: rotate(90deg);
+        }
+
+        .rotate180 .b::after {
+            transform: rotate(180deg);
+        }
+
+        .rotate270 .b::after {
+            transform: rotate(270deg);
+        }
+
+        .w {
+            background-color: whitesmoke;
+        }
+
+        .r {
+            background-color: crimson;
+        }
+
+        .r::after {
+            display: block;
+            content: '';
+            position: relative;
+            top: 37%;
+            left: 37%;
+            width: 26%;
+            height: 26%;
+            border: 4px solid whitesmoke;
+            background-color: crimson;
+            transition: all 0.2s ease-in-out;
+            transform: rotate(45deg);
+        }
+
+        .u::after {
+            display: block;
+            content: '';
+            position: relative;
+            top: 33%;
+            left: 33%;
+            width: 33%;
+            height: 33%;
+            background-color: royalblue;
+            /* outline: 4px solid whitesmoke; */
+            transition: all 0.2s ease-in-out;
+            border-radius: 50%;
+            border: 4px solid whitesmoke;
+        }
+
+        .g::after {
+            content: '✦';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: whitesmoke;
+            display: grid;
+            place-items: center;
+            font-size: 150%;
+            transition: all 0.3s ease-in-out;
+        }
+
+
+
+        .border-u {
+            border-color: royalblue;
+        }
+
+        .border-r {
+            border-color: crimson;
+        }
+
+        .g {
+            /* background-color: chartreuse;
+            background-color: forestgreen;
+            background-color: lawngreen;
+            background-color: olivedrab; */
+            background-color: seagreen;
+        }
+
+        .border-g {
+            /* border-color: chartreuse;
+            border-color: forestgreen;
+            border-color: lawngreen;
+            border-color: olivedrab; */
+            border-color: seagreen;
+        }
+
+        .px-2 {
+            padding: 0 1rem;
+        }
+
+        .px-3 {
+            padding: 0 2rem;
+        }
+
+        .text-l {
+            font-size: 2rem;
+        }
+
+        .rotate0 {
+            transform: rotate(0deg);
+        }
+
+        .rotate90 {
+            transform: rotate(90deg);
+        }
+
+        .rotate180 {
+            transform: rotate(180deg);
+        }
+
+        .rotate270 {
+            transform: rotate(270deg);
+        }
+
+        @media (max-width: 25em) {
+            header {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            CodeCard
+        </div>
+        <div>
+            <select id="mode" class="px-2 text-l">
+                <option value="1">1 team</option>
+                <option value="2" selected="selected">2 teams</option>
+            </select>
+            <!-- <button id="reset" class="px-2 text-xl" type="button">Reset</button> -->
+            <button id="rotate" class="px-2 text-l" type="button">⟳</button>
+            <button id="next" class="px-2 text-l" type="button">🡢</button>
+        </div>
+    </header>
+
+    <main id="main" class="rotate0">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+
+    <script>
+
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+        }
+
+        // -- To shuffle an array a of n elements (indices 0..n-1):
+        // for i from n−1 downto 1 do
+        //      j ← random integer such that 0 ≤ j ≤ i
+        //      exchange a[j] and a[i]
+        // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+        function shuffle(array) {
+            const a = array.slice(0);
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = getRandomIntInclusive(0, i);
+                const tmp = a[i];
+                a[i] = a[j];
+                a[j] = tmp;
+            }
+            return a;
+        }
+
+        function rangeFill(count, fill) {
+            return new Array(count).fill(fill);
+        }
+
+        function buildGrid(startingTeam) {
+            if (mode.value === "2") {
+                const grid = shuffle(
+                    [startingTeam]
+                        .concat(rangeFill(8, 'u'))
+                        .concat(rangeFill(8, 'r'))
+                        .concat(['b'])
+                        .concat(rangeFill(7, 'w')));
+                return grid;
+            }
+
+
+            const grid = shuffle(
+                rangeFill(9, 'g')
+                    .concat(rangeFill(3, 'b'))
+                    .concat(rangeFill(25 - 9 - 3, 'w')));
+
+            return grid;
+        }
+
+        function init(startingTeam) {
+            document.querySelector("#main").classList.remove('border-u');
+            document.querySelector("#main").classList.remove('border-r');
+            document.querySelector("#main").classList.remove('border-g');
+            document.querySelector("#main").classList.add('border-' + startingTeam);
+
+            const grid = buildGrid(startingTeam);
+            [...document.querySelectorAll("main > div")].map((d, i) => {
+                if (d.classList.length) {
+                    d.classList.remove(d.classList.item(d.classList.length - 1));
+                }
+                d.classList.add(grid[i]);
+            });
+        }
+
+        function reset() {
+            const startingTeam = mode.value === "2" ? (getRandomIntInclusive(0, 1) == 0 ? 'u' : 'r') : 'g';
+            init(startingTeam);
+        };
+
+        function next() {
+            debugger;
+            let startingTeam = 'g';
+            if (mode.value === "2") {
+                startingTeam = document.querySelector('main').classList.contains('border-u') ? 'r' : 'u';
+            }
+            init(startingTeam);
+        }
+
+        function getNextRotation(rotation) {
+            switch (rotation) {
+                case "rotate0": return "rotate90";
+                case "rotate90": return "rotate180";
+                case "rotate180": return "rotate270";
+                case "rotate270": return "rotate0";
+                default: console.error(rotation);
+            }
+        }
+
+        function rotate() {
+            const rotation = main.classList.item(0);
+            const nextRotation = getNextRotation(rotation);
+            main.classList.replace(rotation, nextRotation);
+        }
+
+        const main = document.querySelector("#main");
+
+        // document.querySelector('#reset').onclick = reset;
+        document.querySelector('#next').onclick = next;
+        document.querySelector('#rotate').onclick = rotate;
+
+        mode.onchange = function () {
+            reset();
+        }
+
+        reset();
+    </script>
+</body>
+
+</html>
